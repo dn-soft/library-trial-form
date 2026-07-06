@@ -8,6 +8,7 @@
   type ReactNode,
 } from 'react'
 import { COUNTRY_CODES, I18N, type Lang } from './i18n'
+import { submitTrialApplication, type LoginHint } from './api'
 
 type FieldKey =
   | 'purpose'
@@ -123,6 +124,9 @@ export default function App() {
   const [form, setForm] = useState<FormState>(INITIAL)
   const [errors, setErrors] = useState<Partial<Record<FieldKey, boolean>>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [issued, setIssued] = useState<LoginHint | null>(null)
   const fieldRefs = useRef<Partial<Record<FieldKey, HTMLDivElement | null>>>({})
 
   const dict = I18N[lang]
@@ -209,8 +213,10 @@ export default function App() {
     clearErr('org_type')
   }
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    if (submitting) return
+
     const nextErrors: Partial<Record<FieldKey, boolean>> = {}
     let firstInvalid: FieldKey | null = null
     for (const k of FIELD_KEYS) {
@@ -223,8 +229,34 @@ export default function App() {
       fieldRefs.current[firstInvalid]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
-    setSubmitted(true)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      const res = await submitTrialApplication({ ...form, language: lang })
+      if (res.status === 'issued' && res.loginHint) {
+        setIssued(res.loginHint)
+        setSubmitted(true)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      } else if (res.status === 'duplicate') {
+        setSubmitError(res.message ?? dict.err_duplicate)
+      } else {
+        setSubmitError(res.message ?? dict.err_failed)
+      }
+    } catch (err) {
+      // TypeError from fetch (network unreachable, CORS, offline) → localized network error
+      const isNetworkError =
+        err instanceof TypeError ||
+        (err instanceof Error && err.message === 'Failed to fetch')
+      const msg = isNetworkError
+        ? dict.err_network
+        : err instanceof Error
+          ? err.message
+          : dict.err_network
+      setSubmitError(msg)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const showPurposeEtc = form.purpose.includes('Other')
@@ -359,6 +391,7 @@ export default function App() {
                 </label>
                 <input
                   type="text"
+                  name="teacher_name"
                   value={form.teacher_name}
                   placeholder={dict.teacher_ph}
                   onChange={(e) => {
@@ -378,6 +411,7 @@ export default function App() {
                 </label>
                 <input
                   type="text"
+                  name="org_name"
                   value={form.org_name}
                   placeholder={dict.org_ph}
                   onChange={(e) => {
@@ -475,6 +509,7 @@ export default function App() {
                 </label>
                 <input
                   type="email"
+                  name="email"
                   value={form.email}
                   placeholder={dict.email_ph}
                   onChange={(e) => {
@@ -495,6 +530,7 @@ export default function App() {
                 <div className="phone-row">
                   <select
                     className="cc-select"
+                    name="country_code"
                     aria-label="Country code"
                     value={form.country_code}
                     onChange={(e) => patch({ country_code: e.target.value })}
@@ -507,6 +543,7 @@ export default function App() {
                   </select>
                   <input
                     type="tel"
+                    name="phone"
                     value={form.phone}
                     placeholder={dict.phone_ph}
                     onChange={(e) => {
@@ -598,6 +635,7 @@ export default function App() {
                 <div className="date-row">
                   <select
                     className="date-sel"
+                    name="start_year"
                     value={form.start_year}
                     onChange={(e) => {
                       patch({ start_year: e.target.value })
@@ -613,6 +651,7 @@ export default function App() {
                   </select>
                   <select
                     className="date-sel"
+                    name="start_month"
                     value={form.start_month}
                     onChange={(e) => {
                       patch({ start_month: e.target.value })
@@ -628,6 +667,7 @@ export default function App() {
                   </select>
                   <select
                     className="date-sel"
+                    name="start_day"
                     value={form.start_day}
                     onChange={(e) => {
                       patch({ start_day: e.target.value })
@@ -689,8 +729,19 @@ export default function App() {
               </details>
             </section>
 
-            <button type="submit" className="submit">
-              {dict.submit}
+            {submitError && (
+              <div className="submit-error" role="alert">
+                {submitError}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="submit"
+              disabled={submitting}
+              aria-busy={submitting}
+            >
+              {submitting ? dict.submitting : dict.submit}
             </button>
 
             <p className="footer">{dict.footer}</p>
@@ -699,7 +750,35 @@ export default function App() {
           <div className="thanks">
             <div className="icon">🎉</div>
             <h2>{dict.thanks_title}</h2>
-            <p dangerouslySetInnerHTML={{ __html: dict.thanks_p }} />
+            <p>{dict.thanks_p}</p>
+            {issued && (
+              <dl className="issued-info">
+                <div>
+                  <dt>{dict.issued_school_code}</dt>
+                  <dd>
+                    <strong>{issued.schoolCode}</strong>
+                  </dd>
+                </div>
+                <div>
+                  <dt>{dict.issued_teacher_id}</dt>
+                  <dd>
+                    <strong>{issued.teacherId}</strong>
+                  </dd>
+                </div>
+                <div>
+                  <dt>{dict.issued_student_pattern}</dt>
+                  <dd>
+                    <strong>{issued.studentIdPattern}</strong>
+                  </dd>
+                </div>
+                <div>
+                  <dt>{dict.issued_period}</dt>
+                  <dd>
+                    <strong>{issued.trialPeriod}</strong>
+                  </dd>
+                </div>
+              </dl>
+            )}
           </div>
         )}
       </div>

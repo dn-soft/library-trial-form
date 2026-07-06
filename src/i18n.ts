@@ -82,9 +82,17 @@ export interface Dict {
   terms_p3: string
   terms_note: string
   submit: string
+  submitting: string
   footer: string
   thanks_title: string
   thanks_p: string
+  issued_school_code: string
+  issued_teacher_id: string
+  issued_student_pattern: string
+  issued_period: string
+  err_duplicate: string
+  err_failed: string
+  err_network: string
 }
 
 export const I18N: Record<Lang, Dict> = {
@@ -175,9 +183,17 @@ export const I18N: Record<Lang, Dict> = {
     terms_note:
       '※ 귀하는 이에 대한 동의를 거부할 수 있습니다. 다만 동의가 없을 경우 당사의 &lt;Meta-Library 무료 서비스 체험&gt; 신청이 불가능할 수 있음을 알려드립니다.',
     submit: '무료체험 신청하기',
+    submitting: '신청 처리 중...',
     footer: '신청 후 영업일 기준 1~2일 내에 입력하신 메일로 계정 정보를 보내드립니다.',
     thanks_title: '신청이 완료되었습니다!',
-    thanks_p: '입력하신 메일 주소로 영업일 기준 1~2일 내에<br />계정 안내 메일을 보내드리겠습니다.',
+    thanks_p: '아래 계정 정보로 로그인하실 수 있으며, 같은 내용을 입력하신 메일로도 발송했습니다.',
+    issued_school_code: '학교 코드',
+    issued_teacher_id: '교사 계정',
+    issued_student_pattern: '학생 계정',
+    issued_period: '체험 기간',
+    err_duplicate: '동일 이메일로 최근 발급된 트라이얼이 있습니다.',
+    err_failed: '계정 발급에 실패했습니다. 잠시 후 다시 시도해 주세요.',
+    err_network: '서버 연결에 실패했습니다. 네트워크를 확인해 주세요.',
   },
   en: {
     _title: 'Meta-Library Free Trial Application',
@@ -268,10 +284,18 @@ export const I18N: Record<Lang, Dict> = {
     terms_note:
       '※ You may refuse to give this consent. However, please note that without consent you may not be able to apply for the &lt;Meta-Library Free Service Trial&gt;.',
     submit: 'Apply for Free Trial',
+    submitting: 'Submitting...',
     footer: 'After applying, account details will be sent to your email within 1–2 business days.',
     thanks_title: 'Your application is complete!',
     thanks_p:
-      "We'll send account details to the email you provided<br />within 1–2 business days.",
+      'You can log in with the account information below — the same details have been sent to your email.',
+    issued_school_code: 'School Code',
+    issued_teacher_id: 'Teacher Account',
+    issued_student_pattern: 'Student Accounts',
+    issued_period: 'Trial Period',
+    err_duplicate: 'A trial was already issued to this email recently.',
+    err_failed: 'Failed to issue accounts. Please try again in a moment.',
+    err_network: 'Could not reach the server. Please check your network.',
   },
 }
 
