@@ -55,6 +55,15 @@ export interface Dict {
   notice_privacy: string
   account_confirm: string
   account_err: string
+  account_grade_q: string
+  account_grade_hint: string
+  account_grade_err: string
+  account_grade_1: string
+  account_grade_2: string
+  account_grade_3: string
+  account_grade_4: string
+  account_grade_5: string
+  account_grade_6: string
   date_q: string
   date_hint: string
   date_err: string
@@ -131,11 +140,20 @@ export const I18N: Record<Lang, Dict> = {
     phone_err: '전화 번호를 입력해 주세요.',
     sec3: '계정 발급 안내',
     notice_html:
-      '체험용 계정은 <strong>교사용 LMS 계정 1개</strong>와 <strong>학생용 계정 10개</strong>를 발급해 드립니다.',
+      '체험용 계정은 <strong>교사용 LMS 계정 1개</strong>와 <strong>학생용 계정 5개</strong>를 발급해 드립니다.',
     notice_privacy:
       '※ 학생용 체험 계정은 별도의 개인정보를 수집하지 않으며, 학년·반·번호 정보만으로 간편하게 로그인할 수 있습니다.',
     account_confirm: '네, 확인했습니다.',
     account_err: '계정 발급 안내 확인이 필요합니다.',
+    account_grade_q: '계정 발급 학년',
+    account_grade_hint: '체험 계정 5개는 선택한 학년으로 발급됩니다. (위 "체험 대상 학년"과는 별개)',
+    account_grade_err: '계정을 발급할 학년을 선택해 주세요.',
+    account_grade_1: '1학년',
+    account_grade_2: '2학년',
+    account_grade_3: '3학년',
+    account_grade_4: '4학년',
+    account_grade_5: '5학년',
+    account_grade_6: '6학년',
     date_q: '체험 시작일',
     date_hint: '시작 날짜를 포함하여 30일 동안 체험할 수 있습니다.',
     date_err: '체험 시작일을 선택해 주세요.',
@@ -214,11 +232,21 @@ export const I18N: Record<Lang, Dict> = {
     phone_err: 'Please enter your phone number.',
     sec3: 'Account Issuance',
     notice_html:
-      'For the trial, we provide <strong>1 teacher LMS account</strong> and <strong>10 student accounts</strong>.',
+      'For the trial, we provide <strong>1 teacher LMS account</strong> and <strong>5 student accounts</strong>.',
     notice_privacy:
       '※ Student trial accounts collect no personal information; students simply log in with their grade, class, and number.',
     account_confirm: 'Yes, I understand.',
     account_err: 'Please confirm the account issuance notice.',
+    account_grade_q: 'Grade for Issued Accounts',
+    account_grade_hint:
+      'All 5 student accounts will be created under the selected grade. (Independent from the "Target Grade" above.)',
+    account_grade_err: 'Please select the grade for the issued accounts.',
+    account_grade_1: 'Grade 1',
+    account_grade_2: 'Grade 2',
+    account_grade_3: 'Grade 3',
+    account_grade_4: 'Grade 4',
+    account_grade_5: 'Grade 5',
+    account_grade_6: 'Grade 6',
     date_q: 'Trial Start Date',
     date_hint: 'The trial runs for 30 days including the start date.',
     date_err: 'Please select a trial start date.',

@@ -19,6 +19,7 @@ type FieldKey =
   | 'email'
   | 'phone'
   | 'account_confirm'
+  | 'account_grade'
   | 'date'
   | 'privacy_agree'
 
@@ -32,6 +33,7 @@ const FIELD_KEYS: FieldKey[] = [
   'email',
   'phone',
   'account_confirm',
+  'account_grade',
   'date',
   'privacy_agree',
 ]
@@ -51,6 +53,7 @@ interface FormState {
   country_code: string
   phone: string
   account_confirm: boolean
+  account_grade: string
   start_year: string
   start_month: string
   start_day: string
@@ -72,6 +75,7 @@ const INITIAL: FormState = {
   country_code: '+82',
   phone: '',
   account_confirm: false,
+  account_grade: '',
   start_year: '',
   start_month: '',
   start_day: '',
@@ -156,6 +160,8 @@ export default function App() {
         return f.phone.trim() !== ''
       case 'account_confirm':
         return f.account_confirm
+      case 'account_grade':
+        return f.account_grade !== ''
       case 'date':
         return f.start_year !== '' && f.start_month !== '' && f.start_day !== ''
       case 'privacy_agree':
@@ -543,6 +549,41 @@ export default function App() {
                   />
                   <span>{dict.account_confirm}</span>
                 </label>
+              </Field>
+
+              <Field
+                invalid={!!errors.account_grade}
+                errText={dict.account_grade_err}
+                refFn={(el) => (fieldRefs.current.account_grade = el)}
+              >
+                <label className="q">
+                  <span>{dict.account_grade_q}</span> <span className="req">*</span>
+                  <span className="hint">{dict.account_grade_hint}</span>
+                </label>
+                {(
+                  [
+                    ['1', dict.account_grade_1],
+                    ['2', dict.account_grade_2],
+                    ['3', dict.account_grade_3],
+                    ['4', dict.account_grade_4],
+                    ['5', dict.account_grade_5],
+                    ['6', dict.account_grade_6],
+                  ] as const
+                ).map(([v, label]) => (
+                  <OptRow
+                    key={v}
+                    type="radio"
+                    name="account_grade"
+                    value={v}
+                    checked={form.account_grade === v}
+                    onChange={() => {
+                      patch({ account_grade: v })
+                      clearErr('account_grade')
+                    }}
+                  >
+                    {label}
+                  </OptRow>
+                ))}
               </Field>
 
               <Field
