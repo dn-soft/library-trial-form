@@ -47,9 +47,6 @@ export interface Dict {
   email_hint: string
   email_ph: string
   email_err: string
-  phone_q: string
-  phone_ph: string
-  phone_err: string
   sec3: string
   notice_html: string
   notice_privacy: string
@@ -143,9 +140,6 @@ export const I18N: Record<Lang, Dict> = {
     email_hint: '해당 주소로 계정 안내 메일이 발송됩니다.',
     email_ph: '예) teacher@school.ac.kr',
     email_err: '올바른 메일 주소를 입력해 주세요.',
-    phone_q: '전화 번호',
-    phone_ph: '예) 1012345678',
-    phone_err: '전화 번호를 입력해 주세요.',
     sec3: '계정 발급 안내',
     notice_html:
       '체험용 계정은 <strong>교사용 LMS 계정 1개</strong>와 <strong>학생용 계정 5개</strong>를 발급해 드립니다.',
@@ -243,9 +237,6 @@ export const I18N: Record<Lang, Dict> = {
     email_hint: 'Account details will be sent to this address.',
     email_ph: 'e.g., teacher@school.edu',
     email_err: 'Please enter a valid email address.',
-    phone_q: 'Phone Number',
-    phone_ph: 'e.g., 1012345678',
-    phone_err: 'Please enter your phone number.',
     sec3: 'Account Issuance',
     notice_html:
       'For the trial, we provide <strong>1 teacher LMS account</strong> and <strong>5 student accounts</strong>.',
@@ -299,31 +290,3 @@ export const I18N: Record<Lang, Dict> = {
   },
 }
 
-export const COUNTRY_CODES: { value: string; label: string }[] = [
-  { value: '+82', label: '🇰🇷 +82' },
-  { value: '+1', label: '🇺🇸 +1' },
-  { value: '+86', label: '🇨🇳 +86' },
-  { value: '+81', label: '🇯🇵 +81' },
-  { value: '+852', label: '🇭🇰 +852' },
-  { value: '+886', label: '🇹🇼 +886' },
-  { value: '+65', label: '🇸🇬 +65' },
-  { value: '+60', label: '🇲🇾 +60' },
-  { value: '+66', label: '🇹🇭 +66' },
-  { value: '+84', label: '🇻🇳 +84' },
-  { value: '+62', label: '🇮🇩 +62' },
-  { value: '+63', label: '🇵🇭 +63' },
-  { value: '+91', label: '🇮🇳 +91' },
-  { value: '+44', label: '🇬🇧 +44' },
-  { value: '+49', label: '🇩🇪 +49' },
-  { value: '+33', label: '🇫🇷 +33' },
-  { value: '+34', label: '🇪🇸 +34' },
-  { value: '+39', label: '🇮🇹 +39' },
-  { value: '+7', label: '🇷🇺 +7' },
-  { value: '+61', label: '🇦🇺 +61' },
-  { value: '+64', label: '🇳🇿 +64' },
-  { value: '+1-CA', label: '🇨🇦 +1' },
-  { value: '+971', label: '🇦🇪 +971' },
-  { value: '+966', label: '🇸🇦 +966' },
-  { value: '+55', label: '🇧🇷 +55' },
-  { value: '+52', label: '🇲🇽 +52' },
-]

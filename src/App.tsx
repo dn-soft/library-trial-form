@@ -7,7 +7,7 @@
   type FormEvent,
   type ReactNode,
 } from 'react'
-import { COUNTRY_CODES, I18N, type Lang } from './i18n'
+import { I18N, type Lang } from './i18n'
 import { submitTrialApplication, type LoginHint } from './api'
 
 type FieldKey =
@@ -18,7 +18,6 @@ type FieldKey =
   | 'org_type'
   | 'grade'
   | 'email'
-  | 'phone'
   | 'account_confirm'
   | 'account_grade'
   | 'date'
@@ -32,7 +31,6 @@ const FIELD_KEYS: FieldKey[] = [
   'org_type',
   'grade',
   'email',
-  'phone',
   'account_confirm',
   'account_grade',
   'date',
@@ -51,8 +49,6 @@ interface FormState {
   grade: string[]
   grade_etc: string
   email: string
-  country_code: string
-  phone: string
   account_confirm: boolean
   account_grade: string
   start_year: string
@@ -73,8 +69,6 @@ const INITIAL: FormState = {
   grade: [],
   grade_etc: '',
   email: '',
-  country_code: '+82',
-  phone: '',
   account_confirm: false,
   account_grade: '',
   start_year: '',
@@ -160,8 +154,6 @@ export default function App() {
         return f.grade.length > 0
       case 'email':
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())
-      case 'phone':
-        return f.phone.trim() !== ''
       case 'account_confirm':
         return f.account_confirm
       case 'account_grade':
@@ -519,40 +511,6 @@ export default function App() {
                 />
               </Field>
 
-              <Field
-                invalid={!!errors.phone}
-                errText={dict.phone_err}
-                refFn={(el) => (fieldRefs.current.phone = el)}
-              >
-                <label className="q">
-                  <span>{dict.phone_q}</span> <span className="req">*</span>
-                </label>
-                <div className="phone-row">
-                  <select
-                    className="cc-select"
-                    name="country_code"
-                    aria-label="Country code"
-                    value={form.country_code}
-                    onChange={(e) => patch({ country_code: e.target.value })}
-                  >
-                    {COUNTRY_CODES.map((cc) => (
-                      <option key={cc.value} value={cc.value}>
-                        {cc.label}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={form.phone}
-                    placeholder={dict.phone_ph}
-                    onChange={(e) => {
-                      patch({ phone: e.target.value })
-                      clearErr('phone')
-                    }}
-                  />
-                </div>
-              </Field>
             </section>
 
             {/* Section 3 */}

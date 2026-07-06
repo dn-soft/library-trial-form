@@ -163,9 +163,7 @@ form { margin-top: 28px; }
 
 input[type='text'],
 input[type='email'],
-input[type='tel'],
-textarea,
-select.cc-select {
+textarea {
   width: 100%;
   padding: 13px 14px;
   border: 1.5px solid var(--line);
@@ -177,17 +175,12 @@ select.cc-select {
   background: #fff;
 }
 input:focus,
-textarea:focus,
-select.cc-select:focus {
+textarea:focus {
   outline: none;
   border-color: var(--books-blue);
   box-shadow: 0 0 0 3px rgba(40, 144, 232, 0.12);
 }
 .inline-etc { margin-top: 8px; }
-
-.phone-row { display: flex; gap: 8px; }
-select.cc-select { width: 140px; flex: none; cursor: pointer; }
-.phone-row input { flex: 1; }
 
 .date-row { display: flex; gap: 8px; }
 select.date-sel {
@@ -269,7 +262,6 @@ details.terms[open] summary::after { content: ' ▴'; }
 .field.invalid .err-msg { display: block; }
 .field.invalid input,
 .field.invalid textarea,
-.field.invalid select.cc-select { border-color: var(--error); }
 
 .submit {
   width: 100%;
@@ -360,5 +352,4 @@ details.terms[open] summary::after { content: ' ▴'; }
 @media (max-width: 520px) {
   .hero h1 { font-size: 24px; }
   .card { padding: 22px 18px; }
-  select.cc-select { width: 116px; }
 }

@@ -12,8 +12,6 @@ export interface TrialApplicationRequest {
   grade: string[]
   grade_etc?: string
   email: string
-  country_code: string
-  phone: string
   account_confirm: boolean
   account_grade: string
   start_year: string
