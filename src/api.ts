@@ -19,6 +19,7 @@ export interface TrialApplicationRequest {
   start_day: string
   privacy_agree: boolean
   language: Lang
+  recaptcha_token?: string
 }
 
 export interface LoginHint {

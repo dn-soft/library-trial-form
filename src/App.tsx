@@ -9,6 +9,7 @@
 } from 'react'
 import { I18N, type Lang } from './i18n'
 import { submitTrialApplication, type LoginHint } from './api'
+import { executeRecaptcha } from './recaptcha'
 
 type FieldKey =
   | 'purpose'
@@ -225,7 +226,12 @@ export default function App() {
     setSubmitting(true)
     setSubmitError(null)
     try {
-      const res = await submitTrialApplication({ ...form, language: lang })
+      const recaptcha_token = await executeRecaptcha('trial_apply')
+      const res = await submitTrialApplication({
+        ...form,
+        language: lang,
+        recaptcha_token,
+      })
       if (res.status === 'issued' && res.loginHint) {
         setIssued(res.loginHint)
         setSubmitted(true)
