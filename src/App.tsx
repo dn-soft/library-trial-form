@@ -711,32 +711,33 @@ export default function App() {
             <p className="footer">{dict.footer}</p>
           </form>
         ) : (
+          // Thanks 화면은 폼 진행 언어와 무관하게 항상 영어 문구 사용
           <div className="thanks">
             <div className="icon">🎉</div>
-            <h2>{dict.thanks_title}</h2>
-            <p>{dict.thanks_p}</p>
+            <h2>{I18N.en.thanks_title}</h2>
+            <p>{I18N.en.thanks_p}</p>
             {issued && (
               <dl className="issued-info">
                 <div>
-                  <dt>{dict.issued_school_name}</dt>
+                  <dt>{I18N.en.issued_school_name}</dt>
                   <dd>
                     <strong>{issued.schoolName}</strong>
                   </dd>
                 </div>
                 <div>
-                  <dt>{dict.issued_teacher_id}</dt>
+                  <dt>{I18N.en.issued_teacher_id}</dt>
                   <dd>
                     <strong>{issued.teacherId}</strong>
                   </dd>
                 </div>
                 <div>
-                  <dt>{dict.issued_student_pattern}</dt>
+                  <dt>{I18N.en.issued_student_pattern}</dt>
                   <dd>
                     <strong>{issued.studentIdPattern}</strong>
                   </dd>
                 </div>
                 <div>
-                  <dt>{dict.issued_period}</dt>
+                  <dt>{I18N.en.issued_period}</dt>
                   <dd>
                     <strong>{issued.trialPeriod}</strong>
                   </dd>
