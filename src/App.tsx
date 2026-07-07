@@ -115,7 +115,7 @@ function Field({ invalid, errText, refFn, children }: FieldProps) {
 }
 
 export default function App() {
-  const [lang, setLang] = useState<Lang>('ko')
+  const [lang, setLang] = useState<Lang>('en')
   const [form, setForm] = useState<FormState>(INITIAL)
   const [errors, setErrors] = useState<Partial<Record<FieldKey, boolean>>>({})
   const [submitted, setSubmitted] = useState(false)
