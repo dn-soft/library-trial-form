@@ -23,7 +23,7 @@ export interface TrialApplicationRequest {
 }
 
 export interface LoginHint {
-  schoolCode: string
+  schoolName: string
   teacherId: string
   studentIdPattern: string
   trialPeriod: string

@@ -718,9 +718,9 @@ export default function App() {
             {issued && (
               <dl className="issued-info">
                 <div>
-                  <dt>{dict.issued_school_code}</dt>
+                  <dt>{dict.issued_school_name}</dt>
                   <dd>
-                    <strong>{issued.schoolCode}</strong>
+                    <strong>{issued.schoolName}</strong>
                   </dd>
                 </div>
                 <div>

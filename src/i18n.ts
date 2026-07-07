@@ -83,7 +83,7 @@ export interface Dict {
   footer: string
   thanks_title: string
   thanks_p: string
-  issued_school_code: string
+  issued_school_name: string
   issued_teacher_id: string
   issued_student_pattern: string
   issued_period: string
@@ -181,7 +181,7 @@ export const I18N: Record<Lang, Dict> = {
     footer: '신청 후 영업일 기준 1~2일 내에 입력하신 메일로 계정 정보를 보내드립니다.',
     thanks_title: '신청이 완료되었습니다!',
     thanks_p: '아래 계정 정보로 로그인하실 수 있으며, 같은 내용을 입력하신 메일로도 발송했습니다.',
-    issued_school_code: '학교 코드',
+    issued_school_name: '학교 이름',
     issued_teacher_id: '교사 계정',
     issued_student_pattern: '학생 계정',
     issued_period: '체험 기간',
@@ -280,7 +280,7 @@ export const I18N: Record<Lang, Dict> = {
     thanks_title: 'Your application is complete!',
     thanks_p:
       'You can log in with the account information below — the same details have been sent to your email.',
-    issued_school_code: 'School Code',
+    issued_school_name: 'School Name',
     issued_teacher_id: 'Teacher Account',
     issued_student_pattern: 'Student Accounts',
     issued_period: 'Trial Period',
