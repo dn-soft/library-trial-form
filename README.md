@@ -11,9 +11,10 @@
   2. **신청자·기관 정보** — 교사 성함, 기관명, 기관 유형, 대상 학년, 이메일
   3. **계정 발급 안내** — 계정 안내 확인, 계정 발급 학년(1~6), 체험 시작일(연/월/일)
   4. **개인정보 수집 동의** — 약관 전문 포함
-- 한국어 / 영어 언어 전환 (우측 상단 langbar)
+- 한국어 / 영어 언어 전환 (우측 상단 langbar). **기본값은 영어**
 - 클라이언트 사이드 유효성 검증 및 실시간 오류 해제
 - 제출 후 서버 응답에 따라 성공(발급 정보 표시) / 중복 / 실패 / 네트워크 오류 분기
+- 발급 성공 시 완료 화면에 학교 이름 · 교사 계정 · 학생 계정 · 체험 기간 표시
 - Google reCAPTCHA v3 봇 방지 (백그라운드, 사용자 상호작용 없음)
 - 모바일 ~ 태블릿 반응형 대응
 
@@ -33,12 +34,18 @@
 
 ### 환경 변수
 
-`.env.example` 참고. 로컬 개발용은 `.env.local` 로 복사해서 값 채워 사용:
+로컬 개발용은 프로젝트 루트에 `.env.local` 파일 만들어 값 채우기. 프로덕션은 Cloudflare Pages 대시보드의 Environment variables 에 세팅.
 
 | 변수                        | 필수 | 설명                                                                                                     |
 | --------------------------- | ---- | -------------------------------------------------------------------------------------------------------- |
 | `VITE_API_BASE`             | No   | Argong-books 서버 base URL. 기본값 `http://localhost:3002`.                                              |
 | `VITE_RECAPTCHA_SITE_KEY`   | No   | Google reCAPTCHA v3 **site key** (public). 비워두면 봇 방어 비활성 (dev 편의). production 은 반드시 세팅. |
+
+**`.env.local` 예시**:
+```
+VITE_API_BASE=http://localhost:3002
+VITE_RECAPTCHA_SITE_KEY=6Le...
+```
 
 > **주의**: reCAPTCHA **secret key** 는 프론트 env 에 절대 두면 안 됨. Vite 빌드 시 브라우저 번들에 embed 되어 노출됨. secret key 는 서버(`Argong-books`) 의 `RECAPTCHA_SECRET_KEY` env 로만.
 
@@ -70,7 +77,6 @@ npm run preview     # 프로덕션 빌드 로컬 미리보기
 │   ├── App.css              # 페이지 스타일
 │   ├── index.css            # 리셋
 │   └── vite-env.d.ts        # Vite env 타이핑
-├── .env.example             # env 예시 (실제 값은 .env.local 로 복사)
 ├── .claude/launch.json      # Claude Code preview 설정
 ├── package.json
 ├── tsconfig.json / tsconfig.node.json
@@ -106,10 +112,10 @@ npm run preview     # 프로덕션 빌드 로컬 미리보기
   applicationId?: string
   trialCode?: string
   loginHint?: {
-    schoolCode: string
+    schoolName: string       // 신청자가 입력한 기관명 (thanks 화면에 노출됨)
     teacherId: string
-    studentIdPattern: string
-    trialPeriod: string
+    studentIdPattern: string // 예: 'META1 ~ META5'
+    trialPeriod: string      // 예: '2026/07/15 ~ 2026/08/13'
   }
   message?: string
 }
@@ -121,7 +127,9 @@ npm run preview     # 프로덕션 빌드 로컬 미리보기
 
 ## 다국어 (i18n)
 
-`src/i18n.ts`의 `I18N` 객체에 `ko` / `en` 두 사전. 새 문구 추가 시:
+`src/i18n.ts`의 `I18N` 객체에 `ko` / `en` 두 사전. **기본값은 영어** (`App.tsx` 의 `useState<Lang>('en')`) — 사용자가 우측 상단 langbar 로 언제든 한국어 전환 가능.
+
+새 문구 추가 시:
 
 1. `Dict` interface 에 키 추가
 2. `I18N.ko`, `I18N.en` 양쪽에 값 추가
